@@ -24,17 +24,17 @@ springfield_shan <- exp(diversity(springfield, index="shannon"))
 diff <- abs(syndicate_shan - springfield_shan)
 print(diff)
 ```
-We calculate the absolute difference between exp(shannon's index) for the two groups to be 2.985. The exponent of our Shannon's index value will be our test statistic in the upcoming Completely randomized paired design.
+We calculate the absolute difference between exp(shannon's index) for the two groups to be 2.985. The exponent of our Shannon's index value will be our test statistic in the upcoming completely randomized paired design test.
 
 ##Completely randomized test design
 
-We wish to know if the site location has an affect exp(Shannon's index). We will thus setup the following two tailed hypothesis test: 
+We wish to know if the site location has an effect on the exponent of Shannon's index. We will setup the following two tailed hypothesis test: 
 
-H0: Tempature does not affect bulb burnout time. [exp(Shannon's index of syndicate) - exp(Shannon's index of springfield) = 0]
-HA: Tempature does affect bulb burnout time. [exp(Shannon's index of syndicate) - exp(Shannon's index of springfield) is not equal to  0]
+H0: There is no difference in species diversity between the two sites. [exp(Shannon's index of syndicate) - exp(Shannon's index of springfield) is equal to 0]
+HA: There is a difference in species diversity between the two sites. [exp(Shannon's index of syndicate) - exp(Shannon's index of springfield) is not equal to  0]
 
 
-In order to carry out this test, we would need to make 2^20 permutations. This would be a very large vector that most computers would not be able to handle, so instead we will estimate the P-value for the following test by running Monte Carlo simulation on our two data vectors.
+In order to carry out this test, we would need to make 40 choose 20 combinations. This would be a very large vector that most computers would not be able to handle, so instead we will estimate the P-value for the following test by running Monte Carlo simulation on our two data vectors.
 
 
 ```{r}
@@ -58,8 +58,6 @@ for (i in 1:N)
 observed <- shannon(syndicate)-shannon(springfield)
 pval <- (sum(abs(res) >= abs(observed))+1)/(N+1)
 round(pval,2)
-
-
 ```
 We get a P-value of 0.12, which indicates the following: The probability of observing a value as extreme or more extreme than our observed difference in True Diversity between the syndicate and springfield sites is 0.12. Unfortunately, since P > 0.05, we do not have sufficient evidence to reject the null hypothesis. 
 
